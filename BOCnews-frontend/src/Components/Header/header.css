@@ -1,0 +1,11 @@
+.test{
+    background-color: #2C2C2C;
+    font-family: 'Open Sans', sans-serif;
+    height: 78px;
+}
+
+.boclogo{
+    position:absolute;
+    left: 52px;
+    top: 15px;
+}
