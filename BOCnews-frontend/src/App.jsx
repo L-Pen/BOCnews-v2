@@ -72,10 +72,10 @@
 import './App.css';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import NewsCard from './Components/NewsCard';
 import Loader from './Components/Loader'
 import Card from './Components/Card'
 import NavigationBar from './Components/Header/header';
+import FinStats from './Components/FinStats';
 
 const news1 = {
     "position": 1,
@@ -101,9 +101,13 @@ function App() {
   }
   
   const [newsPosts,setNews] = useState([])
+  const [finData,setFinData] = useState({})
 
   useEffect(() => {
+    deleteModel();
+    createmodel();
     searchNews();
+    searchModel();
   },[])
 
   const searchNews = async () => {
@@ -115,13 +119,55 @@ function App() {
     setNews(news_data)
   }
 
+  const searchModel = async () => {
+    const response = await axios.get("http://127.0.0.1:8000/api/stat-list");
+    const news_data = response.data[0];
+
+    setFinData(news_data);
+  }
+
+  const getNumObjectModel = async () => {
+    const url = 'http://127.0.0.1:8000/api/stat-list';
+    const response = await fetch(url);
+    const data = await response.json();
+    const id_start = data[0].id
+    const numObj = data.length
+    // console.log("in",numObj)
+    let returnArray = [id_start,parseInt(numObj)]
+    return returnArray
+  }
+
+  const deleteModel = async () => {
+    let ls = await getNumObjectModel();
+    if(ls[1] === 0){
+      return;
+    }
+    let low = ls[0];
+    let limit = low + ls[1];
+    while(low < limit){
+      fetch(`http://127.0.0.1:8000/api/stat-delete/${low}`, {
+        method:'DELETE',
+      });
+      low++;
+    }
+  }
+
+  const createmodel = () => {
+    const url = 'http://127.0.0.1:8000/api/stat-create';
+    fetch(url,{
+      method: 'POST',
+      headers:{
+        'Content-type':'application/json',
+      },
+      body:JSON.stringify(finData),
+    })
+  }
   return (
     <div className="App">
       <NavigationBar />
       <Card news={news1}/>
-
+      <FinStats finStat={finData}/>
     </div>
-
   );
 }
 
