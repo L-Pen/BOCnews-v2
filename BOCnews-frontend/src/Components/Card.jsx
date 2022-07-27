@@ -6,7 +6,6 @@ import image from '../images/BOC_logo.jpg'
 import Button from 'react-bootstrap/Button';
 
 const NewsCard = ({ news: { date, date_utc, domain, link, position, snippet, source, thumbnail, title } }) => {
-
     return (
       <>
         <style type="text/css">
@@ -21,7 +20,7 @@ const NewsCard = ({ news: { date, date_utc, domain, link, position, snippet, sou
         <Row xs={1} md={2} className="g-4">
           <Col>
             <Card>
-              <Card.Img variant="top" src={thumbnail === 'N/A' ? image : thumbnail} />
+              <Card.Img variant="top" src={thumbnail.length === 0 ? image : thumbnail} />
               <Card.Body>
                 <Card.Title>{title}</Card.Title>
                 <Card.Text>
