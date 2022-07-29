@@ -33,3 +33,11 @@ class FinancialStat(models.Model):
     trim = models.CharField(max_length=120,default=generate_model()["trim"])
     median = models.CharField(max_length=120,default=generate_model()["median"])
     common = models.CharField(max_length=120,default=generate_model()["common"])
+
+# {
+#     "interestRate":"3",
+#     "inflation":"3",
+#     "trim":"3",
+#     "median": "2",
+#     "common": "5"
+# }

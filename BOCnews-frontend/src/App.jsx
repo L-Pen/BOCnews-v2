@@ -76,6 +76,10 @@ import Loader from './Components/Loader'
 import Card from './Components/Card'
 import NavigationBar from './Components/Header/header';
 import FinStats from './Components/FinStats';
+import { Button, CarouselItem } from 'react-bootstrap';
+import { TwitterTweetEmbed} from 'react-twitter-embed';
+import Carousel from 'react-bootstrap/Carousel';
+import Spinner from 'react-bootstrap/Spinner';
 
 const news1 = {
     "position": 1,
@@ -94,79 +98,117 @@ const news1 = {
 function App() {
   const axios = require('axios');
 
-  const params = {
-    api_key: "E4B68012E149457B9E307FC7D882001E",
-    url: "https://www.google.com/search?rlz=1C1CHBF_enCA912CA912&sxsrf=ALiCzsatb2fH6rVnw-xjcjpFox30wJAQnA:1658249382538&q=bank+of+canada+news&tbm=nws&source=univ&tbo=u&sa=X&ved=2ahUKEwjdmZSrtIX5AhX_ZTABHftyAa0Qt8YBegQIAxAF&biw=1162&bih=1170&dpr=1.1",
-    location: "Canada",
-  }
+  // const params = {
+  //   api_key: "E4B68012E149457B9E307FC7D882001E",
+  //   url: "https://www.google.com/search?rlz=1C1CHBF_enCA912CA912&sxsrf=ALiCzsatb2fH6rVnw-xjcjpFox30wJAQnA:1658249382538&q=bank+of+canada+news&tbm=nws&source=univ&tbo=u&sa=X&ved=2ahUKEwjdmZSrtIX5AhX_ZTABHftyAa0Qt8YBegQIAxAF&biw=1162&bih=1170&dpr=1.1",
+  //   location: "Canada",
+  // }
   
-  const [newsPosts,setNews] = useState([])
-  const [finData,setFinData] = useState({})
+  // const [newsPosts,setNews] = useState([])
+  // const [finData,setFinData] = useState({})
 
-  useEffect(() => {
-    deleteModel();
-    createmodel();
-    searchNews();
-    searchModel();
-  },[])
+  // useEffect(() => {
+  //   deleteModel();
+  //   createmodel();
+  //   searchNews();
+  //   searchModel();
+  // },[])
 
-  const searchNews = async () => {
-    const response = await axios.get('https://api.scaleserp.com/search', { params });
-    console.log("Response",response);
-    const news_data = await response.data.news_results;
-    console.log("News Data",news_data);
+  // const searchNews = async () => {
+  //   const response = await axios.get('https://api.scaleserp.com/search', { params });
+  //   console.log("Response",response);
+  //   const news_data = await response.data.news_results;
+  //   console.log("News Data",news_data);
 
-    setNews(news_data)
+  //   setNews(news_data)
+  // }
+
+  // const searchModel = async () => {
+  //   const response = await axios.get("http://127.0.0.1:8000/api/stat-list");
+  //   const news_data = response.data[0];
+
+  //   setFinData(news_data);
+  // }
+
+  // const getNumObjectModel = async () => {
+  //   const url = 'http://127.0.0.1:8000/api/stat-list';
+  //   const response = await fetch(url);
+  //   const data = await response.json();
+  //   const id_start = data[0].id
+  //   const numObj = data.length
+  //   // console.log("in",numObj)
+  //   let returnArray = [id_start,parseInt(numObj)]
+  //   return returnArray
+  // }
+
+  // const deleteModel = async () => {
+  //   let ls = await getNumObjectModel();
+  //   if(ls[1] === 0){
+  //     return;
+  //   }
+  //   let low = ls[0];
+  //   let limit = low + ls[1];
+  //   while(low < limit){
+  //     fetch(`http://127.0.0.1:8000/api/stat-delete/${low}`, {
+  //       method:'DELETE',
+  //     });
+  //     low++;
+  //   }
+  // }
+
+  // const createmodel = () => {
+  //   const url = 'http://127.0.0.1:8000/api/stat-create';
+  //   fetch(url,{
+  //     method: 'POST',
+  //     headers:{
+  //       'Content-type':'application/json',
+  //     },
+  //     body:JSON.stringify(finData),
+  //   })
+  // }
+  const [tweet, setTweetID] = useState('1551348232999112704')
+  const tweetID = async () => {
+    
+    
+    const endpointUrl = "http://localhost:8000/api/tweets";
+    const params = {
+      'query': 'from:twitterdev',
+      'tweet.fields': 'author_id'
   }
+  const res = await axios.get(endpointUrl)
 
-  const searchModel = async () => {
-    const response = await axios.get("http://127.0.0.1:8000/api/stat-list");
-    const news_data = response.data[0];
-
-    setFinData(news_data);
+  if (res) {
+      console.log(res.data.data[0].id)
+      setTweetID(res.data.data[0].id)
+      console.log("This is tweet ID")
+  } else {
+      throw new Error('Unsuccessful request unfortunately');
   }
-
-  const getNumObjectModel = async () => {
-    const url = 'http://127.0.0.1:8000/api/stat-list';
-    const response = await fetch(url);
-    const data = await response.json();
-    const id_start = data[0].id
-    const numObj = data.length
-    // console.log("in",numObj)
-    let returnArray = [id_start,parseInt(numObj)]
-    return returnArray
   }
-
-  const deleteModel = async () => {
-    let ls = await getNumObjectModel();
-    if(ls[1] === 0){
-      return;
-    }
-    let low = ls[0];
-    let limit = low + ls[1];
-    while(low < limit){
-      fetch(`http://127.0.0.1:8000/api/stat-delete/${low}`, {
-        method:'DELETE',
-      });
-      low++;
-    }
-  }
-
-  const createmodel = () => {
-    const url = 'http://127.0.0.1:8000/api/stat-create';
-    fetch(url,{
-      method: 'POST',
-      headers:{
-        'Content-type':'application/json',
-      },
-      body:JSON.stringify(finData),
-    })
-  }
+  const loading = <Spinner animation="border" role="status" variant="info">
+                    <span className="visually-hidden">Loading...</span>
+                  </Spinner>
+  const settings = {"cards": "hidden", "width": "80%","maxWidth": "80%", "hideThread": true, "align":"center"}
+  console.log(tweet)
   return (
     <div className="App">
       <NavigationBar />
-      <Card news={news1}/>
-      <FinStats finStat={finData}/>
+      <Carousel style={{height:"500px", width: "600px", textAlign:"center"}} interval={null} variant="dark">
+        <Carousel.Item  style={{textAlign:"center"}}>
+          <div class="poppity"><TwitterTweetEmbed  tweetId={tweet} placeholder={loading} options={settings}/></div>
+        </Carousel.Item>
+        <Carousel.Item >
+        <div class="poppity"><TwitterTweetEmbed tweetId={'1552470161612996609'} placeholder={loading} options={settings} /></div>
+        </Carousel.Item>
+        <Carousel.Item >
+        <div class="poppity"><TwitterTweetEmbed tweetId={'1552646589524705281'} placeholder={loading} options={settings}/></div>
+        </Carousel.Item>
+        <Carousel.Item>
+        <div class="poppity"><TwitterTweetEmbed tweetId={'1552711902484217857'} placeholder={loading} options={settings} /></div>
+        </Carousel.Item>
+    </Carousel>
+      {/* <Card news={news1}/> */}
+      {/* <FinStats finStat={finData}/> */}
     </div>
   );
 }
