@@ -60,3 +60,27 @@
 
   
 }
+.carousel{
+}
+.scrollable-div {
+  background-color: #ffffff;
+  height: 85vh;
+  overflow: auto;
+  margin: 20px;
+  text-align: justify;
+  padding: 20px;
+  }
+
+.stats-div{
+  height:10px
+}
+
+/* @media only screen and (ma: 1100px){
+  .carousel{
+    display:block;
+  }
+
+  .scrollable-div{
+    height: 80vh;
+  }
+} */
