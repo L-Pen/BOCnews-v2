@@ -17,11 +17,12 @@ h5{
     display: none;
 }
 
-
-
 @media only screen and (min-width: 1000px) {
     .p-2, .border, .border-secondary, .rounded{
         text-align: left;
+    }
+
+    .text-right{
     }
 
     

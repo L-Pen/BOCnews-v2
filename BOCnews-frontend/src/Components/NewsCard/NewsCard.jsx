@@ -15,7 +15,7 @@ const NewsCard = ({ news: { date, date_utc, domain, link, position, snippet, sou
             <div className=" pt-2 font-weight-bold">
               <h2>{title}</h2>
 
-              <div className=" text-right">
+              <div className=" text-right container">
                 <img src={thumbnail}></img>
               </div>
 
