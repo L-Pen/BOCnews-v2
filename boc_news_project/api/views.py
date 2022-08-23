@@ -32,7 +32,7 @@ def statCreate(request):
         serializer.save()
     return Response(serializer.data)
 
-@api_view(['DELETE'])
+@api_view(['DELETE', 'GET'])
 def statDelete(request,pk):
     stat_object = FinancialStat.objects.get(id=pk)
     stat_object.delete()

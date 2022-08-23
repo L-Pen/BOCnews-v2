@@ -1,0 +1,61 @@
+/* .finStats {
+    display: block;
+    justify-content: flex-end;
+    align-items: flex-start;
+    width: 600px;
+    margin-right: 20px;
+} */
+
+/* .finCard{
+    width: 100%;
+}
+
+.list-group-item{
+    display: flex;
+    height: 100px;
+    align-items: center;
+    justify-content: center;
+} */
+
+
+/* (A) FIXED WRAPPER */
+.hwrap {
+    overflow: hidden; /* HIDE SCROLL BAR */
+    background: #eee;
+  }
+   
+  /* (B) MOVING TICKER WRAPPER */
+  .hmove { display: flex; }
+  
+  /* (C) ITEMS - INTO A LONG HORIZONTAL ROW */
+  .hitem {
+    flex-shrink: 0;
+    width: 75%;
+    box-sizing: border-box;
+    padding: 10px;
+    text-align: center;
+  }
+   
+  /* (D) ANIMATION - MOVE ITEMS FROM RIGHT TO LEFT */
+  @keyframes tickerh {
+    0% { transform: translate3d(100%, 0, 0); }
+    100% { transform: translate3d(-500%, 0, 0); }
+  }
+  .hmove { animation: tickerh linear 10s infinite; }
+  .hmove:hover { animation-play-state: paused; }
+
+  .finCard{
+    display: none;
+}
+  
+  @media only screen and (min-width: 1100px) {
+    .hwrap{
+        display: none;
+    }
+
+    .finCard{
+        display: flex;
+        width: 600px;
+    }
+
+}

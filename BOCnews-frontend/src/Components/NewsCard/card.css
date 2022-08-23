@@ -1,0 +1,28 @@
+/* .p-2 {
+    border-radius: 25px;
+    border: 2px solid black;
+} */
+
+/* .newsCard {
+    display: block;
+    flex-direction: row;
+} */
+
+h5{
+    padding-top: 4px;
+    font-weight:normal;
+}
+
+.text-right {
+    display: none;
+}
+
+
+
+@media only screen and (min-width: 1000px) {
+    .p-2, .border, .border-secondary, .rounded{
+        text-align: left;
+    }
+
+    
+}
