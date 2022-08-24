@@ -18,15 +18,7 @@ function NewsCarousel({news}) {
                 {news.map((NewsPost) => {
                     return (
                         <Carousel.Item>
-                            <img
-                            className="w-100"
-                            src={img_path}
-                            alt="First slide"
-                            />
-                            <Carousel.Caption>
-                                <h3>First slide label</h3>
-                                <p>Nulla aretra augue mollis interdum.</p>
-                            </Carousel.Caption>
+                            <NewsCard news={NewsPost} />
                         </Carousel.Item>
 
                     );

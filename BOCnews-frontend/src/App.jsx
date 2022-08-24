@@ -85,6 +85,7 @@ import Card from 'react-bootstrap/Card';
 import NewsComponent from './Components/NewsComponent/NewsComponent';
 import TweetCarousel from './Components/Tweets';
 import ControlledTabsExample from './tabs';
+import NewsCarousel from './Components/NewsCarousel/NewsCarousel';
 
 const news1 =
   [
@@ -277,6 +278,7 @@ function App() {
   return (
     <div className="App">
       <NavigationBar />
+      <NewsCarousel news={news1} />
       {/* <h1 className='News'>NEWS</h1> */}
       <FinStats className="mobile" finStat={finData} />
       {/* <div className='contain'> */}
