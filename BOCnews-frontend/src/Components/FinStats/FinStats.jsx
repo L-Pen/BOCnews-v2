@@ -1,6 +1,7 @@
 import React from "react";
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
+import TweetCarousel from "../Tweets";
 import './finstats.css'
 
 const FinStats = ({ finStat: { interestRate, inflation, trim, median, common } }) => {

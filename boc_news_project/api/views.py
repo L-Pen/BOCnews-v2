@@ -1,10 +1,12 @@
-from os import stat
+import os
 from django.shortcuts import render
 from django.http import JsonResponse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .serializers import FinancialStatSerializer
 from .models import FinancialStat
+import requests 
+from dotenv import load_dotenv
 
 # Create your views here.
 @api_view(['GET'])
@@ -37,3 +39,34 @@ def statDelete(request,pk):
     stat_object = FinancialStat.objects.get(id=pk)
     stat_object.delete()
     return Response("Item Deleted")
+
+# To set your environment variables in your terminal run the following line:
+# export 'BEARER_TOKEN'='<your_bearer_token>'
+load_dotenv()
+bearer_token = os.getenv("BEARER_TOKEN")
+
+search_url = "https://api.twitter.com/2/tweets/search/recent"
+
+# Optional params: start_time,end_time,since_id,until_id,max_results,next_token,
+# expansions,tweet.fields,media.fields,poll.fields,place.fields,user.fields
+query_params = {'query': '"Bank of Canada" OR "bank of canada" -is:quote -is:retweet','tweet.fields': 'author_id'}
+
+
+# Twitter Views
+def bearer_oauth(r):
+    """
+    Method required by bearer token authentication.
+    """
+
+    r.headers["Authorization"] = f"Bearer {bearer_token}"
+    r.headers["User-Agent"] = "v2RecentSearchPython"
+    return r
+
+@api_view(['GET'])
+def recentTweets(request):
+    print(bearer_token)
+    response = requests.get(search_url, auth=bearer_oauth, params=query_params)
+    print(response.status_code)
+    if response.status_code != 200:
+        raise Exception(response.status_code, response.text)
+    return Response(response.json())
